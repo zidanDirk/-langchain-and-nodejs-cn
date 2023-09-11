@@ -1,0 +1,20 @@
+{
+  "name": "how-to-extract-and-generate-json-data-with-gpts-langchain-and-nodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.mjs",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "langchain": "^0.0.146",
+    "pdf-parse": "^1.1.1"
+  },
+  "devDependencies": {
+    "dotenv": "^16.3.1"
+  }
+}
