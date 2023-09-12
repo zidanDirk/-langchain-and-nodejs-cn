@@ -15,16 +15,16 @@ dotenv.config()
 
 const parser = StructuredOutputParser.fromZodSchema(
     z.object({
-      name: z.string().describe("人类的名字"),
-      surname: z.string().describe("人类的姓氏"),
-      age: z.number().describe("人类的年龄"),
-      appearance: z.string().describe("人类的外形描述"),
-      shortBio: z.string().describe("简介"),
-      university: z.string().optional().describe("就读大学的名称"),
-      gender: z.string().describe("人类的性别"),
+      name: z.string().describe("Human name"),
+      surname: z.string().describe("Human surname"),
+      age: z.number().describe("Human age"),
+      appearance: z.string().describe("Human appearance description"),
+      shortBio: z.string().describe("Short bio secription"),
+      university: z.string().optional().describe("University name if attended"),
+      gender: z.string().describe("Gender of the human"),
       interests: z
         .array(z.string())
-        .describe("关于人类兴趣的 json 数组"),
+        .describe("json array of strings human interests"),
     })
 );
 
@@ -42,7 +42,8 @@ const prompt = new PromptTemplate({
     openAIApiKey: process.env.OPENAI_API_KEY,
     temperature: 0.5, 
     model: "gpt-3.5-turbo", 
-    maxTokens: 2000 
+    reduce_k_below_max_tokens: true,
+    maxTokens: 2000
 });
 
   const input = await prompt.format({
@@ -51,14 +52,9 @@ const prompt = new PromptTemplate({
 
 const response = await model.call(input);
 
-console.log(response)
-
 try {
-
     console.log(await parser.parse(response));
-   
    } catch (e) {
-   
     console.error("解析失败，错误是: ", e);
 
     const fixParser = OutputFixingParser.fromLLM(
